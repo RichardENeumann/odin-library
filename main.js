@@ -1,6 +1,7 @@
 "use strict";
 
 const myLibrary = [];
+let displayCache = "";
 
 function Book(title, author, pages, haveRead) {
     this.title = title;
@@ -36,6 +37,17 @@ function drawLibrary() {
             tr.appendChild(haveRead);
         document.getElementById("libTable").appendChild(tr);
     });
+}
+
+function showModal() {
+    displayCache = document.getElementById("display").innerHTML;
+    let modal = 
+        "<input type='text' id='title'>" + 
+        "<input type='text' id='author'>" +
+        "<input type='number' id='pages'>" +
+        "<input type='checkbox' id='read'>" +
+        "<button>Save</button>";
+    document.getElementById("display").innerHTML = modal;
 }
 
 drawLibrary();
