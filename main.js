@@ -21,7 +21,23 @@ addBookToLibrary("A Game of Thrones", "George R.R. Martin", 807, true);
 addBookToLibrary("The Broken Sword", "Poul Anderson", 208, false);
 
 function drawLibrary() {
-    myLibrary.forEach(function (item) {
+    document.getElementById("display").innerHTML = "";
+    let table = document.createElement("table");
+    table.innerHTML = 
+        "<thead>" + 
+        "   <tr>" +
+        "       <th>Title</th>" + 
+        "       <th>Author</th>" + 
+        "       <th>Pages</th>" +
+        "       <th>Read</th>" +
+        "   </tr>" +
+        "</thead>" +
+        "<tbody id='libTable'>" +
+        "</tbody>" +
+        "</table>";
+        document.getElementById("display").appendChild(table);
+
+    myLibrary.forEach(function(item) {
         let tr = document.createElement("tr");
         let title = document.createElement("td");
             title.innerText = item.title;
@@ -37,17 +53,27 @@ function drawLibrary() {
             tr.appendChild(haveRead);
         document.getElementById("libTable").appendChild(tr);
     });
+    let button = document.createElement("button");
+        button.id = "addBook";
+        button.onclick = showModal;
+        button.textContent = "Add a tbook";
+    document.body.appendChild(button);
 }
 
 function showModal() {
-    displayCache = document.getElementById("display").innerHTML;
-    let modal = 
+    document.getElementById("addBook").remove();
+    document.getElementById("display").innerHTML = 
         "<input type='text' id='title'>" + 
         "<input type='text' id='author'>" +
         "<input type='number' id='pages'>" +
         "<input type='checkbox' id='read'>" +
-        "<button>Save</button>";
-    document.getElementById("display").innerHTML = modal;
+        "<button onclick='" +
+        "   addBookToLibrary(" + 
+        "       document.getElementById(\"title\").value," + 
+        "       document.getElementById(\"author\").value," +
+        "       document.getElementById(\"pages\").value," +
+        "       document.getElementById(\"read\").value);" + 
+        "   drawLibrary();'>Save</button>";
 }
 
 drawLibrary();
