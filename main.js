@@ -1,7 +1,5 @@
 "use strict";
-
 const myLibrary = [];
-let displayCache = "";
 
 function Book(title, author, pages, haveRead) {
     this.title = title;
@@ -36,7 +34,6 @@ function drawLibrary() {
         "</tbody>" +
         "</table>";
         document.getElementById("display").appendChild(table);
-
     myLibrary.forEach(function(item, index) {
         let tr = document.createElement("tr");
         let title = document.createElement("td");
@@ -68,7 +65,6 @@ function toggleRead(event) {
     document.getElementById(event.target.id).innerText = 
         (myLibrary[event.target.id.match(/\d+/)[0]].haveRead === true) ? "✅" : "❌";
 }
-
 function showModal() {
     document.getElementById("addBook").remove();
     document.getElementById("display").innerHTML = 
@@ -88,5 +84,4 @@ function showModal() {
         "       document.getElementById(\"read\").checked);" + 
         "   drawLibrary();'>Save</button>";
 }
-
 drawLibrary();
