@@ -37,7 +37,7 @@ function drawLibrary() {
         "</table>";
         document.getElementById("display").appendChild(table);
 
-    myLibrary.forEach(function(item) {
+    myLibrary.forEach(function(item, index) {
         let tr = document.createElement("tr");
         let title = document.createElement("td");
             title.innerText = item.title;
@@ -56,23 +56,27 @@ function drawLibrary() {
     let button = document.createElement("button");
         button.id = "addBook";
         button.onclick = showModal;
-        button.textContent = "Add a tbook";
+        button.textContent = "Add a book";
     document.body.appendChild(button);
 }
 
 function showModal() {
     document.getElementById("addBook").remove();
     document.getElementById("display").innerHTML = 
+        "<label for='title'>Title</label>" +
         "<input type='text' id='title'>" + 
+        "<label for='author'>Author</label>" +
         "<input type='text' id='author'>" +
+        "<label for='Pages'>Pages</label>" +
         "<input type='number' id='pages'>" +
+        "<label for='read'>Read it?</label>" +
         "<input type='checkbox' id='read'>" +
         "<button onclick='" +
         "   addBookToLibrary(" + 
         "       document.getElementById(\"title\").value," + 
         "       document.getElementById(\"author\").value," +
         "       document.getElementById(\"pages\").value," +
-        "       document.getElementById(\"read\").value);" + 
+        "       document.getElementById(\"read\").checked);" + 
         "   drawLibrary();'>Save</button>";
 }
 
