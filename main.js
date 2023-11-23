@@ -50,6 +50,10 @@ function drawLibrary() {
             tr.appendChild(pages);
         let haveRead = document.createElement("td");
             haveRead.innerText = item.haveRead;
+        let btRead = document.createElement("button");
+            btRead.innerText = (item.haveRead === true) ? "✅" : "❌";
+            btRead.id = "item-" + index;
+            haveRead.appendChild(btRead);
             tr.appendChild(haveRead);
         document.getElementById("libTable").appendChild(tr);
     });
