@@ -49,10 +49,10 @@ function drawLibrary() {
             pages.innerText = item.pages;
             tr.appendChild(pages);
         let haveRead = document.createElement("td");
-            haveRead.innerText = item.haveRead;
         let btRead = document.createElement("button");
             btRead.innerText = (item.haveRead === true) ? "✅" : "❌";
             btRead.id = "item-" + index;
+            btRead.addEventListener("click", toggleRead);
             haveRead.appendChild(btRead);
             tr.appendChild(haveRead);
         document.getElementById("libTable").appendChild(tr);
@@ -62,6 +62,11 @@ function drawLibrary() {
         button.onclick = showModal;
         button.textContent = "Add a book";
     document.body.appendChild(button);
+}
+function toggleRead(event) {
+    myLibrary[event.target.id.match(/\d+/)[0]].toggleRead();
+    document.getElementById(event.target.id).innerText = 
+        (myLibrary[event.target.id.match(/\d+/)[0]].haveRead === true) ? "✅" : "❌";
 }
 
 function showModal() {
