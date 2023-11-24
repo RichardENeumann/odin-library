@@ -56,7 +56,7 @@ function drawLibrary() {
         "<tbody id='libTable'>" +
         "</tbody>" +
         "</table>";
-        document.getElementById("display").appendChild(table);
+    document.getElementById("display").appendChild(table);
 
     myLibrary.forEach(function(item, index) {
         let tr = document.createElement("tr");
