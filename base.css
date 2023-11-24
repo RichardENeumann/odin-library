@@ -16,7 +16,8 @@ header {
     padding: .5rem;
     font-size: 3rem;
     font-weight: bold;
-    background-color: lightseagreen;
+    background-color: white;
+    color: lightseagreen;
     border-radius: 1rem;
     box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.5);
 }
@@ -54,4 +55,17 @@ button {
     border: none;
     border-radius: 1rem;
     box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.5);
+}
+form {
+    background-color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+form button {
+    box-shadow: none;
 }

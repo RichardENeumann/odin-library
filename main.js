@@ -107,13 +107,13 @@ function btToggleRead(event) {
 function btShowModal() {
     document.getElementById("display").innerHTML = 
         "<form id='modal'>" +
-        "   <label for='title'>Title</label>" +
+        "   <label for='title'>Title:</label>" +
         "   <input type='text' id='title'>" + 
-        "   <label for='author'>Author</label>" +
+        "   <label for='author'>Author:</label>" +
         "   <input type='text' id='author'>" +
-        "   <label for='pages'>Pages</label>" +
+        "   <label for='pages'>Pages:</label>" +
         "   <input type='number' id='pages'>" +
-        "   <label for='read'>Read it?</label>" +
+        "   <label for='read'>Have you read it?</label>" +
         "   <input type='checkbox' id='read'>" +
         "   <button type='button' onclick='" +
         "       btExpandLibrary(" + 
@@ -121,7 +121,7 @@ function btShowModal() {
         "           document.getElementById(\"author\").value," +
         "           document.getElementById(\"pages\").value," +
         "           document.getElementById(\"read\").checked);" + 
-        "       '>Save</button>" +
+        "       '>Add to library</button>" +
         "</form>";
 }
 
