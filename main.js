@@ -15,8 +15,18 @@ function addBookToLibrary(title, author, pages, haveRead) {
     myLibrary[myLibrary.length] = new Book(title, author, pages, haveRead);
 }
 
-function validateInput() {
-    
+function btExpandLibrary(title, author, pages, haveRead) {
+    if (
+        document.getElementById("title").value != "" &&
+        document.getElementById("author").value != "" &&
+        document.getElementById("pages").value > 0 && 
+        document.getElementById("pages").value != "") {
+            addBookToLibrary(title, author, pages, haveRead);
+            drawLibrary();
+    } else {
+            alert("Please fill out all necessary Information!");
+            btShowModal();
+    }
 }
 
 addBookToLibrary("Killing Floor", "Lee Child", 525, true);
@@ -95,24 +105,23 @@ function btToggleRead(event) {
 }
 
 function btShowModal() {
-    document.getElementById("addBook").remove();
     document.getElementById("display").innerHTML = 
         "<form id='modal'>" +
-        "<label for='title'>Title</label>" +
-        "<input type='text' id='title'>" + 
-        "<label for='author'>Author</label>" +
-        "<input type='text' id='author'>" +
-        "<label for='pages'>Pages</label>" +
-        "<input type='number' id='pages'>" +
-        "<label for='read'>Read it?</label>" +
-        "<input type='checkbox' id='read'>" +
-        "<button type='button' onclick='" +
-        "   addBookToLibrary(" + 
-        "       document.getElementById(\"title\").value," + 
-        "       document.getElementById(\"author\").value," +
-        "       document.getElementById(\"pages\").value," +
-        "       document.getElementById(\"read\").checked);" + 
-        "   drawLibrary();'>Save</button>" +
+        "   <label for='title'>Title</label>" +
+        "   <input type='text' id='title'>" + 
+        "   <label for='author'>Author</label>" +
+        "   <input type='text' id='author'>" +
+        "   <label for='pages'>Pages</label>" +
+        "   <input type='number' id='pages'>" +
+        "   <label for='read'>Read it?</label>" +
+        "   <input type='checkbox' id='read'>" +
+        "   <button type='button' onclick='" +
+        "       btExpandLibrary(" + 
+        "           document.getElementById(\"title\").value," + 
+        "           document.getElementById(\"author\").value," +
+        "           document.getElementById(\"pages\").value," +
+        "           document.getElementById(\"read\").checked);" + 
+        "       '>Save</button>" +
         "</form>";
 }
 
