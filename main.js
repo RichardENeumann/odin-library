@@ -1,15 +1,19 @@
 "use strict";
 const myLibrary = [];
 
-function Book(title, author, pages, haveRead) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.haveRead = haveRead;
-    this.toggleRead = function () {
+class Book {
+
+    constructor(title, author, pages, haveRead) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.haveRead = haveRead;
+    }
+    toggleRead() {
         this.haveRead = (this.haveRead === true) ? false : true;
     }
 }
+
 
 function addBookToLibrary(title, author, pages, haveRead) {
     myLibrary[myLibrary.length] = new Book(title, author, pages, haveRead);
@@ -28,10 +32,6 @@ function btExpandLibrary(title, author, pages, haveRead) {
             btShowModal();
     }
 }
-
-addBookToLibrary("Killing Floor", "Lee Child", 525, true);
-addBookToLibrary("A Game of Thrones", "George R.R. Martin", 807, true);
-addBookToLibrary("The Broken Sword", "Poul Anderson", 208, false);
 
 function drawLibrary() {
     document.getElementById("display").innerHTML = "";
@@ -124,5 +124,9 @@ function btShowModal() {
         "       '>Add to library</button>" +
         "</form>";
 }
+
+addBookToLibrary("Killing Floor", "Lee Child", 525, true);
+addBookToLibrary("A Game of Thrones", "George R.R. Martin", 807, true);
+addBookToLibrary("The Broken Sword", "Poul Anderson", 208, false);
 
 drawLibrary();
