@@ -1,14 +1,24 @@
 "use strict";
 
 class Book {
+    #title;
+    #author;
+    #pages;
+    #haveRead;
+
     constructor(title, author, pages, haveRead) {
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.haveRead = haveRead;
+        this.#title = title;
+        this.#author = author;
+        this.#pages = pages;
+        this.#haveRead = haveRead;
     }
+    get title() { return this.#title; }
+    get author() { return this.#author; }
+    get pages() { return this.#pages; }
+    get haveRead() { return this.#haveRead; }
+
     toggleRead() {
-        this.haveRead = (this.haveRead === true) ? false : true;
+        this.#haveRead = (this.#haveRead === true) ? false : true;
     }
 }
 
@@ -18,9 +28,8 @@ class Library {
     constructor() {
         this.#shelf = [];
     }
-    get shelf() {
-        return this.#shelf;
-    }
+    get shelf() { return this.#shelf; }
+
     addBook(title, author, pages, haveRead) {
         this.#shelf[this.#shelf.length] = new Book(title, author, pages, haveRead);
     }
@@ -88,7 +97,7 @@ class Library {
     }
 }
 
-// DOM interaction with class:
+// DOM interaction with library
 function btExpandLibrary(title, author, pages, haveRead) {
     if (
         document.getElementById("title").value != "" &&
@@ -104,7 +113,7 @@ function btExpandLibrary(title, author, pages, haveRead) {
 }
 
 function btDelItem(event) {
-    myLibrary.deleteBook(event.target.id.match(/\d+/)[0], 1);
+    myLibrary.deleteBook(event.target.id.match(/\d+/)[0]);
     myLibrary.render();
 }
 
@@ -138,6 +147,7 @@ function btShowModal() {
 
 const myLibrary = new Library();
 
+// Fill shelf
 myLibrary.addBook("Killing Floor", "Lee Child", 525, true);
 myLibrary.addBook("A Game of Thrones", "George R.R. Martin", 807, true);
 myLibrary.addBook("The Broken Sword", "Poul Anderson", 208, false);
