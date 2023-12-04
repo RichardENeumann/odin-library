@@ -31,7 +31,7 @@ class Library {
     get shelf() { return this.#shelf; }
 
     addBook(title, author, pages, haveRead) {
-        this.#shelf[this.#shelf.length] = new Book(title, author, pages, haveRead);
+        this.#shelf.push(new Book(title, author, pages, haveRead));
     }
     deleteBook(index) {
         this.#shelf.splice(index, 1);
