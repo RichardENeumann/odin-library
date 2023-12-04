@@ -1,8 +1,6 @@
 "use strict";
-const myLibrary = [];
 
 class Book {
-
     constructor(title, author, pages, haveRead) {
         this.title = title;
         this.author = author;
@@ -14,96 +12,109 @@ class Book {
     }
 }
 
+class Library {
+    #shelf;
 
-function addBookToLibrary(title, author, pages, haveRead) {
-    myLibrary[myLibrary.length] = new Book(title, author, pages, haveRead);
+    constructor() {
+        this.#shelf = [];
+    }
+    get shelf() {
+        return this.#shelf;
+    }
+    addBook(title, author, pages, haveRead) {
+        this.#shelf[this.#shelf.length] = new Book(title, author, pages, haveRead);
+    }
+    deleteBook(index) {
+        this.#shelf.splice(index, 1);
+    }
+    render() {
+        document.getElementById("display").innerHTML = "";
+        let table = document.createElement("table");
+        table.innerHTML = 
+            "<thead>" + 
+            "   <tr>" +
+            "       <th>Title</th>" + 
+            "       <th></th>" +
+            "       <th>Author</th>" + 
+            "       <th>Pages</th>" +
+            "       <th>Read</th>" +
+            "   </tr>" +
+            "   <tr>" +
+            "       <th></th>" + 
+            "       <th><small>(Click to delete)</small></th>" +
+            "       <th></th>" + 
+            "       <th></th>" +
+            "       <th><small>(Click to toggle)</small></th>" +
+            "   </tr>" +
+            "</thead>" +
+            "<tbody id='libTable'>" +
+            "</tbody>" +
+            "</table>";
+        document.getElementById("display").appendChild(table);
+    
+        this.#shelf.forEach(function(item, index) {
+            let tr = document.createElement("tr");
+            let title = document.createElement("td");
+                title.innerText = item.title;
+                tr.appendChild(title);
+            let del = document.createElement("td");
+            let btDel = document.createElement("button");
+                btDel.innerText = "🗑";
+                btDel.id = "delete-" + index;
+                btDel.addEventListener("click", btDelItem);
+                del.appendChild(btDel);
+                tr.appendChild(del);
+            let author = document.createElement("td");
+                author.innerText = item.author;
+                tr.appendChild(author);
+            let pages = document.createElement("td");
+                pages.innerText = item.pages;
+                tr.appendChild(pages);
+            let haveRead = document.createElement("td");
+            let btRead = document.createElement("button");
+                btRead.innerText = (item.haveRead === true) ? "✅" : "❌";
+                btRead.id = "item-" + index;
+                btRead.addEventListener("click", btToggleRead);
+                haveRead.appendChild(btRead);
+                tr.appendChild(haveRead);
+            document.getElementById("libTable").appendChild(tr);
+        });
+
+        let button = document.createElement("button");
+            button.id = "addBook";
+            button.addEventListener("click", btShowModal);
+            button.textContent = "Add a book";
+        document.getElementById("display").appendChild(button);
+    }
 }
 
+// DOM interaction with class:
 function btExpandLibrary(title, author, pages, haveRead) {
     if (
         document.getElementById("title").value != "" &&
         document.getElementById("author").value != "" &&
         document.getElementById("pages").value > 0 && 
         document.getElementById("pages").value != "") {
-            addBookToLibrary(title, author, pages, haveRead);
-            drawLibrary();
+            myLibrary.addBook(title, author, pages, haveRead);
+            myLibrary.render();
     } else {
             alert("Please fill out all necessary Information!");
             btShowModal();
     }
 }
 
-function drawLibrary() {
-    document.getElementById("display").innerHTML = "";
-    let table = document.createElement("table");
-    table.innerHTML = 
-        "<thead>" + 
-        "   <tr>" +
-        "       <th>Title</th>" + 
-        "       <th></th>" +
-        "       <th>Author</th>" + 
-        "       <th>Pages</th>" +
-        "       <th>Read</th>" +
-        "   </tr>" +
-        "   <tr>" +
-        "       <th></th>" + 
-        "       <th><small>(Click to delete)</small></th>" +
-        "       <th></th>" + 
-        "       <th></th>" +
-        "       <th><small>(Click to toggle)</small></th>" +
-        "   </tr>" +
-        "</thead>" +
-        "<tbody id='libTable'>" +
-        "</tbody>" +
-        "</table>";
-    document.getElementById("display").appendChild(table);
-
-    myLibrary.forEach(function(item, index) {
-        let tr = document.createElement("tr");
-        let title = document.createElement("td");
-            title.innerText = item.title;
-            tr.appendChild(title);
-        let del = document.createElement("td");
-        let btDel = document.createElement("button");
-            btDel.innerText = "🗑";
-            btDel.id = "delete-" + index;
-            btDel.addEventListener("click", btDelItem);
-            del.appendChild(btDel);
-            tr.appendChild(del);
-        let author = document.createElement("td");
-            author.innerText = item.author;
-            tr.appendChild(author);
-        let pages = document.createElement("td");
-            pages.innerText = item.pages;
-            tr.appendChild(pages);
-        let haveRead = document.createElement("td");
-        let btRead = document.createElement("button");
-            btRead.innerText = (item.haveRead === true) ? "✅" : "❌";
-            btRead.id = "item-" + index;
-            btRead.addEventListener("click", btToggleRead);
-            haveRead.appendChild(btRead);
-            tr.appendChild(haveRead);
-        document.getElementById("libTable").appendChild(tr);
-    });
-
-    let button = document.createElement("button");
-        button.id = "addBook";
-        button.addEventListener("click", btShowModal);
-        button.textContent = "Add a book";
-    document.getElementById("display").appendChild(button);
-}
-
 function btDelItem(event) {
-    myLibrary.splice(event.target.id.match(/\d+/)[0], 1);
-    drawLibrary();
+    myLibrary.deleteBook(event.target.id.match(/\d+/)[0], 1);
+    myLibrary.render();
 }
 
 function btToggleRead(event) {
-    myLibrary[event.target.id.match(/\d+/)[0]].toggleRead();
+    myLibrary.shelf[event.target.id.match(/\d+/)[0]].toggleRead();
     document.getElementById(event.target.id).innerText = 
-        (myLibrary[event.target.id.match(/\d+/)[0]].haveRead === true) ? "✅" : "❌";
+        (myLibrary.shelf[event.target.id.match(/\d+/)[0]].haveRead === true) ? "✅" : "❌";
 }
 
+// Render modal for adding new book
 function btShowModal() {
     document.getElementById("display").innerHTML = 
         "<form id='modal'>" +
@@ -125,8 +136,10 @@ function btShowModal() {
         "</form>";
 }
 
-addBookToLibrary("Killing Floor", "Lee Child", 525, true);
-addBookToLibrary("A Game of Thrones", "George R.R. Martin", 807, true);
-addBookToLibrary("The Broken Sword", "Poul Anderson", 208, false);
+const myLibrary = new Library();
 
-drawLibrary();
+myLibrary.addBook("Killing Floor", "Lee Child", 525, true);
+myLibrary.addBook("A Game of Thrones", "George R.R. Martin", 807, true);
+myLibrary.addBook("The Broken Sword", "Poul Anderson", 208, false);
+
+myLibrary.render();
